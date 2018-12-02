@@ -3,6 +3,7 @@
 #include <cstdint>
 #include <cstddef>
 
+namespace MPU9255 {
 namespace Register
 {
 namespace detail
@@ -50,7 +51,7 @@ public:
         return mData;
     }
 private:
-    T mData;
+    T mData = 0;
 };
 
 template<typename T, size_t I>
@@ -86,10 +87,10 @@ private:
     {
         return SwapBytes<detail::UnsignedInteger<sizeof(T)>, sizeof(T)>()(mData);
     }
-    uint8_t mData[sizeof(T)];
+    uint8_t mData[sizeof(T)] = {};
 };
 
-template<typename T, size_t SIZE, Endian ENDIAN>
+template<typename T, size_t SIZE, Endian ENDIAN = Endian::little>
 class Vector
 {
 public:
@@ -114,4 +115,5 @@ private:
     Component mComponents[SIZE];
 };
 
+}
 }
